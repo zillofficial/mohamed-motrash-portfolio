@@ -22,3 +22,6 @@ const rootMarkup=html.split('<div id="root">')[1];
 assert.ok(rootMarkup.includes('fetchPriority="high"')||rootMarkup.includes('fetchpriority="high"'));
 assert.ok(!rootMarkup.includes('opacity:0'));
 console.log('Production: prerendered visible first view, one responsive preload, inline critical CSS, relative Pages URLs passed.');
+
+assert.equal((html.match(/data:font\/woff2;base64,/g)||[]).length,3);
+console.log('Production: three first-view font subsets available in critical HTML.');

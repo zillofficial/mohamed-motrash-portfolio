@@ -7,7 +7,7 @@ The GitHub Pages build is static. `npm run build` runs Vite's client build and a
 - `src/style.css`: first-view/header/menu styles. `src/sections.css`: lazy section styles imported with `Sections.jsx`. Do not move shared rules into the deferred stylesheet.
 - `src/motion-features.js`: full layout/gesture features, activated on actual input. Keep all keyboard, touch, pointer and wheel activation modes.
 - `src/hero-image.js` and HTML preload: keep identical `srcset` / `sizes`. `npm run images:prepare` regenerates transparent WebP variants, including 360px for the mobile DPR gap.
-- First-view fonts are subsets of the same source font versions, with shaping tables, advances and vertical metrics retained. Complete fonts remain available to other scenes. `font-display: swap` is retained.
+- First-view fonts are subsets of the same source font versions, with shaping tables, advances and vertical metrics retained. The three required first-view subsets are embedded into critical CSS to prevent the font-swap CLS observed in a production trial. Complete fonts remain available to other scenes. `font-display: swap` is retained.
 
 ## Updating first-view text
 

@@ -14,6 +14,12 @@ for(const match of [...html.matchAll(/<link rel="stylesheet"[^>]+href="([^"]+)"[
  const file=match[1].replace(/^\.\//,'');
  let css=await fs.readFile('dist/'+file,'utf8');
  css=css.replace(/url\(\.\/([^)]*)\)/g,'url(./assets/$1)');
+ // A measured first-view font swap caused CLS. These three tiny, required
+ // subsets travel with the critical HTML so no late network font swap occurs.
+ for(const font of [...css.matchAll(/url\(\.\/assets\/(hero-[^)]+\.woff2)\)/g)]){
+  const data=await fs.readFile('dist/assets/'+font[1]);
+  css=css.replace(font[0],`url(data:font/woff2;base64,${data.toString('base64')})`);
+ }
  html=html.replace(match[0],`<style data-critical>${css}</style>`);
 }
 await fs.writeFile('dist/index.html',html);
