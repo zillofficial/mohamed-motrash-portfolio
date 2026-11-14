@@ -50,3 +50,12 @@ html,body,#root{width:100%;height:100%;overflow:clip}.app{width:100%;overflow:cl
 .smooth-gallery{touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}.smooth-gallery *{-webkit-user-drag:none}.smooth-gallery .work-card{transition:box-shadow .15s;touch-action:none}.poster-icon{display:flex;align-items:center;justify-content:center}.client-symbol{display:grid;place-items:center}
 /* The fallback is a single complete card, rendered only when WebGL fails. */
 .lanyard-fallback{position:absolute;top:50%;left:50%;transform:translate(-50%,-35%);width:auto;height:auto;max-width:72%;max-height:68%;object-fit:contain;z-index:1;opacity:1;border-radius:14px}
+
+/* Large, non-overlapping hit areas retain the compact visual indicators. */
+.scene-dots{gap:4px;bottom:-16px}.scene-dots button,.scene-dots .selected{width:44px;height:44px;min-width:44px;background:transparent;position:relative;border-radius:12px}
+.scene-dots button::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:10px;background:#ffffff50}
+.scene-dots .selected::after{width:22px;background:#9867ed}
+.progress{max-width:360px;gap:4px}.progress button{height:44px;min-width:24px;background:transparent;position:relative;flex:1}
+.progress button::after{content:'';position:absolute;inset:20px 0;border-radius:8px;background:#ffffff30}.progress .on{background:transparent}.progress .on::after{background:linear-gradient(90deg,#6a3bcb,#b685ff)}
+.navlinks button,.mobile-menu button,.menu-btn{min-height:44px}.menu-btn{min-width:44px}.scene:focus{outline:none}.scene:focus-visible{outline:2px solid #c4a5ff;outline-offset:8px}
+@media(prefers-reduced-motion:reduce){.glow,.avatar{transform:none!important}}

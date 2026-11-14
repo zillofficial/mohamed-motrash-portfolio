@@ -1,0 +1,11 @@
+import a64 from './assets/avatar-64.webp';
+import a160 from './assets/avatar-160.webp';
+import a240 from './assets/avatar-240.webp';
+import a320 from './assets/avatar-320.webp';
+import a480 from './assets/avatar-480.webp';
+import a640 from './assets/avatar-640.webp';
+import a960 from './assets/avatar-960.webp';
+export const brandAvatar=a64;
+export const avatarSrc=a320;
+export const avatarSrcSet=`${a160} 160w, ${a240} 240w, ${a320} 320w, ${a480} 480w, ${a640} 640w, ${a960} 960w`;
+export const avatarSizes='(max-width:700px) and (max-height:740px) 160px, (max-width:700px) 190px, (max-width:760px) 180px, (max-height:660px) 220px, (min-width:1500px) 314px, 280px';
