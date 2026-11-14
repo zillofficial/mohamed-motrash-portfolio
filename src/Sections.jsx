@@ -8,9 +8,9 @@ import {content as c} from './content';
 const DesignerLanyard=lazy(()=>import('./DesignerLanyard'));
 function Heading({title,sub}){return <div className="heading"><h2>{title}</h2><p>{sub}</p></div>}
 export function Works({setLight,reduce,blocked}){
- const[index,setIndex]=useState(0),[category,setCategory]=useState('all');const gallery=useRef(null);
- const items=useMemo(()=>category==='all'?portfolio:portfolio.filter(item=>item.type===category),[category]);
- const filters=[['all','الكل'],['image','تصميمات'],['video','فيديو']];
+ const[index,setIndex]=useState(0),[category,setCategory]=useState('image');const gallery=useRef(null);
+ const items=useMemo(()=>portfolio.filter(item=>item.type===category),[category]);
+ const filters=[['image','تصميمات'],['video','فيديو']];
  return <div className="works"><div className="section-top"><Heading title={c.nav[1]} sub={c.categories[0]}/><div className="work-filters" role="group" aria-label="نوع الأعمال">{filters.map(([value,label])=><button key={value} aria-pressed={category===value} onClick={()=>{setCategory(value);setIndex(0)}}>{label}</button>)}</div></div>
  <SmoothGallery key={category} ref={gallery} items={items} brochures={false} reduce={reduce} blocked={blocked} onActiveChange={setIndex} onOpen={item=>setLight({...item,trigger:document.activeElement})} renderItem={item=>(<div className="portfolio-piece"><div className="portfolio-art"><img draggable="false" loading="lazy" decoding="async" src={item.thumb} alt=""/>{item.type==='video'&&<span className="video-mark"><Play size={19} fill="currentColor" aria-hidden="true"/><span>{Math.floor(item.duration/60)}:{String(item.duration%60).padStart(2,'0')}</span></span>}</div><div className="portfolio-caption"><small>{item.type==='video'?'مونتاج فيديو':'تصميم جرافيك'}</small><strong>{item.title}</strong>{item.type==='video'&&<span className="portfolio-play"><Play size={14} fill="currentColor" aria-hidden="true"/>{item.aspect<1?'تشغيل الريل':'تشغيل الفيديو'}</span>}</div></div>)}/>
  <div className="carousel-controls"><span>{c.ui.worksHint}</span><div className="progress">{items.map((item,i)=><button key={item.id} aria-label={`عرض العمل: ${item.title}`} aria-current={index===i?'true':undefined} className={index===i?'on':''} onClick={()=>gallery.current?.focus(i)}/>)}</div></div></div>;
