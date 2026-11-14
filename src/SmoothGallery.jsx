@@ -73,13 +73,13 @@ export default forwardRef(function SmoothGallery({items,brochures,reduce,blocked
    if(settings.current.blocked||e.altKey||e.metaKey||e.ctrlKey)return;
    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();settle(Math.round(position.get())+(e.key==='ArrowLeft'?1:-1));}
   };
-  const select=(i,item)=>{
+  const select=(i,item,openDirect=false)=>{
    if(state.suppress||settings.current.blocked)return;
    const distance=nearestPosition(position.get(),i,count)-position.get();
-   if(Math.abs(distance)<.2){settle(Math.round(position.get()));settings.current.onOpen(item);}
+   if(openDirect||Math.abs(distance)<.2){settle(nearestPosition(position.get(),i,count));settings.current.onOpen(openDirect?{...item,autoplay:true}:item);}
    else focus(i);
   };
-  const measure=()=>{const card=element.querySelector('.work-card');const width=card?.offsetWidth;if(width&&!brochures)state.spacing=width*.94;element.style.setProperty('--gallery-step',`${state.spacing}px`);};
+  const measure=()=>{element.style.setProperty('--gallery-height',`${element.clientHeight}px`);const widths=Array.from(element.querySelectorAll('.work-card'),card=>card.offsetWidth);const width=widths.length?widths.reduce((sum,width)=>sum+width,0)/widths.length:0;if(width&&!brochures)state.spacing=width*.94;element.style.setProperty('--gallery-step',`${state.spacing}px`);};
   // Keep spacing reactive across device rotation without rebuilding the input handlers.
   const spacingObserver=new ResizeObserver(measure);spacingObserver.observe(element);measure();
   engine.current={focus,select};announce();
@@ -89,7 +89,7 @@ export default forwardRef(function SmoothGallery({items,brochures,reduce,blocked
   raf=requestAnimationFrame(frame);
   return()=>{alive=false;cancelAnimationFrame(raf);clearTimeout(wheelTimer);stop();unsubscribe();spacingObserver.disconnect();engine.current=null;element.removeEventListener('pointerdown',down);window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',cancel);element.removeEventListener('lostpointercapture',cancel);element.removeEventListener('pointerenter',enter);element.removeEventListener('pointerleave',leave);element.removeEventListener('click',captureClick,true);element.removeEventListener('dragstart',dragStart);element.removeEventListener('wheel',wheel);window.removeEventListener('keydown',key);};
  },[items,brochures,reduce,position]);
- return <motion.div ref={root} className={'carousel smooth-gallery '+(brochures?'brochures':'')} role="region" aria-roledescription="carousel" aria-label="معرض الأعمال" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:reduce?.1:.3}}>{items.map((item,i)=><GalleryCard key={item.title} item={item} i={i} count={items.length} position={position} brochures={brochures} onClick={()=>engine.current?.select(i,item)} onFocus={e=>{if(e.currentTarget.matches(':focus-visible'))engine.current?.focus(i)}}>{renderItem(item)}</GalleryCard>)}</motion.div>;
+ return <motion.div ref={root} className={'carousel smooth-gallery '+(brochures?'brochures':'')} role="region" aria-roledescription="carousel" aria-label="معرض الأعمال" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:reduce?.1:.3}}>{items.map((item,i)=><GalleryCard key={item.title} item={item} i={i} count={items.length} position={position} brochures={brochures} onClick={e=>engine.current?.select(i,item,Boolean(e.target.closest('.portfolio-play')))} onFocus={e=>{if(e.currentTarget.matches(':focus-visible'))engine.current?.focus(i)}}>{renderItem(item)}</GalleryCard>)}</motion.div>;
 });
 function GalleryCard({item,i,count,position,brochures,onClick,onFocus,children}){
  const d=useTransform(position,p=>wrapIndex(i-p+count/2,count)-count/2);
@@ -99,5 +99,5 @@ function GalleryCard({item,i,count,position,brochures,onClick,onFocus,children})
  const filter=useTransform(d,v=>`blur(${brochures?Math.min(Math.abs(v),1)*5:0}px)`);
  const zIndex=useTransform(d,v=>Math.round(100-Math.abs(v)*20));
  const pointerEvents=useTransform(opacity,v=>v>.1?'auto':'none');
- return <motion.button type="button" className={'work-card '+(brochures?'book':'poster')} style={{'--card-color':item.color,transform,opacity,filter,zIndex,pointerEvents}} onClick={onClick} onFocus={onFocus} aria-label={item.title}>{children}</motion.button>;
+ return <motion.button type="button" className={'work-card '+(brochures?'book':'poster')+(item.aspect?' native-card':'')} style={{'--art-ratio':item.aspect,'--card-color':item.color,transform,opacity,filter,zIndex,pointerEvents}} data-media-type={item.type} onClick={onClick} onFocus={onFocus} aria-label={item.type==='video'?`تشغيل الفيديو: ${item.title}`:item.title}>{children}</motion.button>;
 }

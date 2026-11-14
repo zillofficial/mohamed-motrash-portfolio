@@ -50,3 +50,16 @@
 .lightbox{padding:70px 20px 30px;overflow:auto}.portfolio-detail>video{min-width:min(320px,80vw)}
 @media(max-width:700px){.work-filters{width:max-content;margin-top:15px}.work-filters button{padding-inline:17px}.portfolio-caption strong{font-size:14px}.portfolio-caption{min-height:74px;padding:11px 14px}.portfolio-detail h2{font-size:17px}.portfolio-detail>p{font-size:12px;max-width:85vw}.portfolio-detail>img,.portfolio-detail>video{max-height:62dvh}.works .carousel{height:clamp(260px,43dvh,400px)}}
 .portfolio-art{overflow:hidden}.poster .portfolio-art img{position:absolute;inset:0}
+
+/* Card frames follow the supplied artwork ratio, including square posts and vertical reels. */
+.native-card{--caption-height:86px;--art-width:min(380px,78vw,calc((var(--gallery-height,340px) - var(--caption-height) - 30px) * var(--art-ratio)));width:var(--art-width);height:calc(var(--art-width)/var(--art-ratio) + var(--caption-height));left:calc(50% - var(--art-width)/2);top:calc(50% - (var(--art-width)/var(--art-ratio) + var(--caption-height))/2)}
+.native-card .portfolio-art{flex:none;height:calc(var(--art-width)/var(--art-ratio));aspect-ratio:var(--art-ratio)}
+.native-card .portfolio-caption{height:var(--caption-height);min-height:0;padding:10px 12px}.native-card .portfolio-caption strong{font-size:14px;line-height:1.45}.native-card .portfolio-caption small{font-size:9px}
+@media(max-width:700px){.native-card{--caption-height:82px}.native-card .portfolio-caption strong{font-size:12px}}
+
+.native-card[data-media-type=video]{--caption-height:116px}
+.portfolio-play{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;padding:7px 9px;min-height:32px;border-radius:20px;background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:600;line-height:1.3}
+@media(max-width:700px){.native-card[data-media-type=video]{--caption-height:112px}.portfolio-play{font-size:10px;padding-inline:5px;gap:4px}}
+
+@media(min-height:661px){.works .carousel{height:min(56dvh,500px)}}
+@media(max-width:700px) and (min-height:661px){.works .carousel{height:clamp(320px,53dvh,490px)}}
