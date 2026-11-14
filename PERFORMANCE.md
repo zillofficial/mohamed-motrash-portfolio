@@ -2,7 +2,7 @@
 
 The GitHub Pages build is static. `npm run build` runs Vite's client build and a temporary server build, renders the shared React App once, hydrates that HTML on the client, and inlines only first-view CSS. No Node server is required on GitHub Pages.
 
-- `src/App.jsx`: shared markup and interaction state. Keep initial markup deterministic, visible, and compatible with reduced motion.
+- `src/App.jsx`: shared markup and interaction state. Scene fades use native compositor animations with presence lifecycle, independently of deferred gesture/layout features; prepare destination code/CSS before switching. Keep initial markup deterministic, visible, and compatible with reduced motion.
 - `src/main.jsx` / `src/entry-server.jsx`: hydration and build-time rendering.
 - `src/style.css`: first-view/header/menu styles. `src/sections.css`: lazy section styles imported with `Sections.jsx`. Do not move shared rules into the deferred stylesheet.
 - `src/motion-features.js`: full layout/gesture features, activated on actual input. Keep all keyboard, touch, pointer and wheel activation modes.
