@@ -27,4 +27,4 @@ cp -R dist/. docs/
 GitHub Pages source: `main` branch, `/docs` folder.
 
 Lanyard interaction adapted from the React Bits component supplied for this project.
-Portfolio artwork currently includes illustrative placeholder designs and stock images.
+Portfolio artwork is a curated selection of supplied client work. Images are WebP; videos are compressed H.264/AAC and load only when their detail view is opened. CVC and the interview promo are explicitly labeled 60-second excerpts. The original PDF, PSD files, and source videos are not deployed. Edit selections in `src/portfolio.js`.
