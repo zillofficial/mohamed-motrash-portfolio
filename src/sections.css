@@ -52,8 +52,8 @@
 .portfolio-art{overflow:hidden}.poster .portfolio-art img{position:absolute;inset:0}
 
 /* Card frames follow the supplied artwork ratio, including square posts and vertical reels. */
-.native-card{--caption-height:86px;--art-width:min(380px,78vw,calc((var(--gallery-height,340px) - var(--caption-height) - 30px) * var(--art-ratio)));width:var(--art-width);height:calc(var(--art-width)/var(--art-ratio) + var(--caption-height));left:calc(50% - var(--art-width)/2);top:calc(50% - (var(--art-width)/var(--art-ratio) + var(--caption-height))/2)}
-.native-card .portfolio-art{flex:none;height:calc(var(--art-width)/var(--art-ratio));aspect-ratio:var(--art-ratio)}
+.native-card{--frame-ratio:var(--art-ratio);--caption-height:86px;--art-width:min(380px,78vw,calc((var(--gallery-height,340px) - var(--caption-height) - 30px) * var(--frame-ratio)));width:var(--art-width);height:calc(var(--art-width)/var(--frame-ratio) + var(--caption-height));left:calc(50% - var(--art-width)/2);top:calc(50% - (var(--art-width)/var(--frame-ratio) + var(--caption-height))/2)}
+.native-card .portfolio-art{flex:none;height:calc(var(--art-width)/var(--frame-ratio));aspect-ratio:var(--frame-ratio)}
 .native-card .portfolio-caption{height:var(--caption-height);min-height:0;padding:10px 12px}.native-card .portfolio-caption strong{font-size:14px;line-height:1.45}.native-card .portfolio-caption small{font-size:9px}
 @media(max-width:700px){.native-card{--caption-height:82px}.native-card .portfolio-caption strong{font-size:12px}}
 
@@ -63,3 +63,10 @@
 
 @media(min-height:661px){.works .carousel{height:min(56dvh,500px)}}
 @media(max-width:700px) and (min-height:661px){.works .carousel{height:clamp(320px,53dvh,490px)}}
+
+/* Wider reel frames keep native portrait media contained and captions readable. */
+.native-card[data-media-layout=portrait]{--frame-ratio:.8;--caption-height:110px}
+.native-card[data-media-layout=portrait] .portfolio-art{background:radial-gradient(ellipse at center,#242424,#161616 80%)}
+.native-card[data-media-layout=portrait] .portfolio-caption strong{font-size:14px}
+.native-card[data-media-layout=portrait] .portfolio-play{font-size:12px;min-height:36px}
+@media(max-width:700px){.native-card[data-media-layout=portrait]{--caption-height:108px}.native-card[data-media-layout=portrait] .portfolio-caption strong{font-size:13px}.native-card[data-media-layout=portrait] .portfolio-play{font-size:11px}}

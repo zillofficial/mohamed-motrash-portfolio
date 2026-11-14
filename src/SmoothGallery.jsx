@@ -95,9 +95,9 @@ function GalleryCard({item,i,count,position,brochures,onClick,onFocus,children})
  const d=useTransform(position,p=>wrapIndex(i-p+count/2,count)-count/2);
  // CSS calculates pixel spacing so ResizeObserver can update it without stale closures.
  const transform=useTransform(d,v=>`translateX(calc(${v} * var(--gallery-step,250px))) scale(${1-Math.min(Math.abs(v),1)*.14}) perspective(1200px) rotateY(${-clamp(v,-1,1)*14}deg) rotateZ(${brochures?-5+clamp(v,-1,1)*6:0}deg)`);
- const opacity=useTransform(d,v=>{const a=Math.abs(v);return (1-Math.min(a,1)*.52)*(brochures?clamp((1.48-a)/.28,0,1):clamp((2.65-a)/.5,0,1));});
- const filter=useTransform(d,v=>`blur(${brochures?Math.min(Math.abs(v),1)*5:0}px)`);
+ const opacity=useTransform(d,v=>{const a=Math.abs(v);return (item.aspect?1:1-Math.min(a,1)*.52)*(brochures?clamp((1.48-a)/.28,0,1):clamp((2.65-a)/.5,0,1));});
+ const filter=useTransform(d,v=>`blur(${brochures?Math.min(Math.abs(v),1)*5:0}px) brightness(${item.aspect?1-Math.min(Math.abs(v),1)*.38:1})`);
  const zIndex=useTransform(d,v=>Math.round(100-Math.abs(v)*20));
  const pointerEvents=useTransform(opacity,v=>v>.1?'auto':'none');
- return <motion.button type="button" className={'work-card '+(brochures?'book':'poster')+(item.aspect?' native-card':'')} style={{'--art-ratio':item.aspect,'--card-color':item.color,transform,opacity,filter,zIndex,pointerEvents}} data-media-type={item.type} onClick={onClick} onFocus={onFocus} aria-label={item.type==='video'?`تشغيل الفيديو: ${item.title}`:item.title}>{children}</motion.button>;
+ return <motion.button type="button" className={'work-card '+(brochures?'book':'poster')+(item.aspect?' native-card':'')} style={{'--art-ratio':item.aspect,'--card-color':item.color,transform,opacity,filter,zIndex,pointerEvents}} data-media-type={item.type} data-media-layout={item.aspect<1?'portrait':'landscape'} onClick={onClick} onFocus={onFocus} aria-label={item.type==='video'?`تشغيل الفيديو: ${item.title}`:item.title}>{children}</motion.button>;
 }
