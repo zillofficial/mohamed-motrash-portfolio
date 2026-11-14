@@ -49,14 +49,14 @@ useEffect(()=>{
   g.sum+=delta;g.last=now;
   if(Math.abs(g.sum)>=55)advance(Math.sign(g.sum));
  };
- const start=e=>{if(e.target.closest('.lanyard-panel')){g.touch=null;return;}g.touch=e.touches.length===1?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;};
+ const start=e=>{if(e.target.closest('.lanyard-panel,.smooth-gallery')){g.touch=null;return;}g.touch=e.touches.length===1?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;};
  const move=e=>{
   if(!g.touch||light||e.touches.length!==1)return;
   const dx=e.touches[0].clientX-g.touch.x,dy=e.touches[0].clientY-g.touch.y;
   if(Math.abs(dy)>12&&Math.abs(dy)>Math.abs(dx)*1.3)e.preventDefault();
  };
  const end=e=>{
-  if(e.target.closest('.lanyard-panel')||document.querySelector('[data-dragging="true"]')||Array.from(document.querySelectorAll('[data-gesture-until]')).some(el=>Number(el.dataset.gestureUntil)>Date.now())){g.touch=null;return;}
+  if(e.target.closest('.lanyard-panel,.smooth-gallery')||document.querySelector('[data-dragging="true"]')||Array.from(document.querySelectorAll('[data-gesture-until]')).some(el=>Number(el.dataset.gestureUntil)>Date.now())){g.touch=null;return;}
   if(!g.touch||!e.changedTouches.length)return;
   const dx=e.changedTouches[0].clientX-g.touch.x,dy=e.changedTouches[0].clientY-g.touch.y;
   g.touch=null;

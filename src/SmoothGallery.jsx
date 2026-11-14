@@ -1,5 +1,6 @@
 import React,{forwardRef,useEffect,useImperativeHandle,useRef} from 'react';
 import {animate,motion,useMotionValue,useTransform} from 'framer-motion';
+import {bindGalleryPointerEvents} from './gallery-pointer-events';
 import {gestureAxis,releasedPosition,nearestPosition,wrapIndex} from './gallery-gesture';
 const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
 
@@ -39,7 +40,7 @@ export default forwardRef(function SmoothGallery({items,brochures,reduce,blocked
    if(!d.axis){
     const axis=gestureAxis(dx,dy,d.pointerType);
     if(!axis)return;
-    if(axis==='vertical'){state.drag=null;settle(Math.round(position.get()));return;}
+    if(axis==='vertical'){state.suppress=true;state.drag=null;lockScene();settle(Math.round(position.get()));return;}
     d.axis=axis;state.suppress=true;element.dataset.dragging='true';
     element.setPointerCapture?.(e.pointerId);
    }
@@ -83,11 +84,10 @@ export default forwardRef(function SmoothGallery({items,brochures,reduce,blocked
   // Keep spacing reactive across device rotation without rebuilding the input handlers.
   const spacingObserver=new ResizeObserver(measure);spacingObserver.observe(element);measure();
   engine.current={focus,select};announce();
-  element.addEventListener('pointerdown',down);
-  window.addEventListener('pointermove',move,{passive:false});window.addEventListener('pointerup',up);window.addEventListener('pointercancel',cancel);
-  element.addEventListener('lostpointercapture',cancel);element.addEventListener('pointerenter',enter);element.addEventListener('pointerleave',leave);element.addEventListener('click',captureClick,true);element.addEventListener('dragstart',dragStart);element.addEventListener('wheel',wheel,{passive:false});window.addEventListener('keydown',key);
+  const unbindPointers=bindGalleryPointerEvents(element,window,{down,move,up,cancel,enter,leave});
+  element.addEventListener('click',captureClick,true);element.addEventListener('dragstart',dragStart);element.addEventListener('wheel',wheel,{passive:false});window.addEventListener('keydown',key);
   raf=requestAnimationFrame(frame);
-  return()=>{alive=false;cancelAnimationFrame(raf);clearTimeout(wheelTimer);stop();unsubscribe();spacingObserver.disconnect();engine.current=null;element.removeEventListener('pointerdown',down);window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',cancel);element.removeEventListener('lostpointercapture',cancel);element.removeEventListener('pointerenter',enter);element.removeEventListener('pointerleave',leave);element.removeEventListener('click',captureClick,true);element.removeEventListener('dragstart',dragStart);element.removeEventListener('wheel',wheel);window.removeEventListener('keydown',key);};
+  return()=>{alive=false;cancelAnimationFrame(raf);clearTimeout(wheelTimer);stop();unsubscribe();spacingObserver.disconnect();engine.current=null;unbindPointers();element.removeEventListener('click',captureClick,true);element.removeEventListener('dragstart',dragStart);element.removeEventListener('wheel',wheel);window.removeEventListener('keydown',key);};
  },[items,brochures,reduce,position]);
  return <motion.div ref={root} className={'carousel smooth-gallery '+(brochures?'brochures':'')} role="region" aria-roledescription="carousel" aria-label="معرض الأعمال" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:reduce?.1:.3}}>{items.map((item,i)=><GalleryCard key={item.title} item={item} i={i} count={items.length} position={position} brochures={brochures} onClick={e=>engine.current?.select(i,item,Boolean(e.target.closest('.portfolio-play')))} onFocus={e=>{if(e.currentTarget.matches(':focus-visible'))engine.current?.focus(i)}}>{renderItem(item)}</GalleryCard>)}</motion.div>;
 });
