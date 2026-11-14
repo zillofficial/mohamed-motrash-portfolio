@@ -1,10 +1,11 @@
-import React, {useEffect,useState} from 'react';
+import React, {useCallback,useEffect,useState} from 'react';
 import {useReducedMotion} from 'framer-motion';
 import Lanyard from './Lanyard';
 import {content as c} from './content';
 
 export default function DesignerLanyard(){
- const [faces,setFaces]=useState(null);const reduce=useReducedMotion();
+ const [faces,setFaces]=useState(null);const [status,setStatus]=useState('loading');const reduce=useReducedMotion();
+ const ready=useCallback(()=>setStatus('ready'),[]);const failed=useCallback(()=>setStatus('error'),[]);
  useEffect(()=>{let active=true;const img=new Image();
  img.onload=async()=>{await document.fonts.ready;if(!active)return;
  const make=back=>{const canvas=document.createElement('canvas');canvas.width=800;canvas.height=1125;const ctx=canvas.getContext('2d');
@@ -20,9 +21,9 @@ export default function DesignerLanyard(){
 }
  else{ctx.fillStyle='#a775ff';ctx.font='900 280px Cairo';ctx.fillText(c.name[0],400,630);ctx.fillStyle='#ffffff';ctx.font='800 56px Cairo';ctx.fillText(c.name,400,820);ctx.fillStyle='#c9b6e5';ctx.font='30px "IBM Plex Sans Arabic"';ctx.fillText(c.role,400,885);}
  return canvas.toDataURL('image/png');};setFaces({front:make(false),back:make(true)});
- };img.src=c.lanyardPhoto;return()=>{active=false;};},[]);
+ };img.onerror=()=>{if(active)setStatus('error');};img.src=c.lanyardPhoto;return()=>{active=false;};},[]);
  return <div className="lanyard-panel" role="group" aria-label={`${c.name} — بطاقة تعريف تفاعلية قابلة للسحب والتقليب`}>
- <img className="lanyard-fallback" src={c.lanyardPhoto} alt=""/>
- {faces&&<Lanyard frontImage={faces.front} backImage={faces.back} cardColor="#21132f" strapColor="#7542bd" metal="silver" finish="matte" size={.68} strapLength={.18} damping={.95} elasticity={.2} breeze={0} intro={false} />}
+ {status==='error'&&faces&&<img className="lanyard-fallback" src={faces.front} alt={`${c.name} — بطاقة التعريف`}/>}
+ {faces&&status!=='error'&&<Lanyard onReady={ready} onError={failed} frontImage={faces.front} backImage={faces.back} cardColor="#21132f" strapColor="#7542bd" metal="silver" finish="matte" size={.68} strapLength={.18} damping={.95} elasticity={.2} breeze={0} intro={false} />}
  </div>;
 }

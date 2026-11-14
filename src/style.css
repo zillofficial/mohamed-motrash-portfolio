@@ -14,7 +14,7 @@ html,body,#root{width:100%;height:100%;overflow:clip}.app{width:100%;overflow:cl
 @media(max-height:700px) and (max-width:760px){.avatar img{transform:translateY(-45px)}}
 .home h1 .gradient-text{white-space:nowrap;letter-spacing:0;scale:1;transform-origin:right center}
 .carousel{touch-action:pan-y;user-select:none;-webkit-user-select:none}.carousel-track{position:absolute;inset:0;perspective:1200px;transform-style:preserve-3d}.carousel[data-dragging="true"],.carousel[data-dragging="true"] .work-card{cursor:grabbing}.carousel img{-webkit-user-drag:none}
-.lanyard-panel{position:relative;height:min(64vh,540px);min-height:300px;width:100%;isolation:isolate}.lanyard-panel>.lanyard{z-index:1}.lanyard-fallback{position:absolute;width:70%;height:70%;object-fit:contain;top:15%;left:15%;z-index:-1;opacity:.9}.lanyard-panel:has(canvas)>.lanyard-fallback{display:none}
+.lanyard-panel{position:relative;height:min(64vh,540px);min-height:300px;width:100%;isolation:isolate}.lanyard-panel>.lanyard{z-index:1}.lanyard-fallback{position:absolute;width:70%;height:70%;object-fit:contain;top:15%;left:15%;z-index:-1;opacity:.9}
 @media(max-width:760px){.about{gap:20px;grid-template-columns:1.1fr .9fr}.lanyard-panel{height:360px;min-height:240px}}
 @media(max-width:430px){.about{grid-template-columns:1fr;gap:0}.about-copy p{font-size:11px;line-height:1.85;margin-top:10px}.about-copy>i{margin:10px 0 15px}.about h2{font-size:30px}.lanyard-panel{height:280px;min-height:220px}.about-copy{padding-inline:8px}}
 @media(max-height:700px) and (max-width:430px){.lanyard-panel{height:200px;min-height:180px}.about-copy p{font-size:10px;line-height:1.7}.about h2{font-size:24px}}
@@ -45,3 +45,8 @@ html,body,#root{width:100%;height:100%;overflow:clip}.app{width:100%;overflow:cl
 /* Center the mobile home composition and its personal identity. */
 @media(max-width:700px){.home{text-align:center}.home .eyebrow{justify-content:center;margin:0 auto 18px}.home h1{text-align:center;padding-inline:0;font-size:clamp(52px,14vw,88px)}.home .hero-bottom{display:flex;flex-direction:column;align-items:center;padding:0;margin-top:0;gap:0}.home .identity{width:100%;display:flex;flex-direction:column-reverse;align-items:center;gap:0}.home .identity>div:first-child{min-width:0;text-align:center;margin-top:-45px;position:relative;z-index:4}.home .identity h2{font-size:19px}.home .identity p{font-size:12px;margin-top:4px}.home .avatar{width:190px;height:220px;margin-top:-25px}.home .avatar img{transform:translateY(-40px)}.home .hero-bottom .cta{margin:20px auto 0}}
 @media(max-width:700px) and (max-height:740px){.home .avatar{width:160px;height:180px}.home .identity>div:first-child{margin-top:-38px}.home .identity h2{font-size:17px}.home .hero-bottom .cta{margin-top:15px}.home .eyebrow{margin-bottom:12px}}
+
+/* Pointer gestures belong to the gallery until the axis is resolved. */
+.smooth-gallery{touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none}.smooth-gallery *{-webkit-user-drag:none}.smooth-gallery .work-card{transition:box-shadow .15s;touch-action:none}.poster-icon{display:flex;align-items:center;justify-content:center}.client-symbol{display:grid;place-items:center}
+/* The fallback is a single complete card, rendered only when WebGL fails. */
+.lanyard-fallback{position:absolute;top:50%;left:50%;transform:translate(-50%,-35%);width:auto;height:auto;max-width:72%;max-height:68%;object-fit:contain;z-index:1;opacity:1;border-radius:14px}

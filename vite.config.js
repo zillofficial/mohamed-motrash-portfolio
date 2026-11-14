@@ -1,1 +1,1 @@
-import {defineConfig} from 'vite';import tailwindcss from '@tailwindcss/vite';export default defineConfig({base:"./",plugins:[tailwindcss()],esbuild:{jsx:"automatic"}});
+import {defineConfig} from 'vite';import tailwindcss from '@tailwindcss/vite';export default defineConfig({base:"./",optimizeDeps:{entries:["index.html"]},plugins:[tailwindcss()],esbuild:{jsx:"automatic"}});

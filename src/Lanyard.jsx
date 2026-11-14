@@ -723,11 +723,15 @@ const Lanyard = ({
   interactive = true,
   intro = true,
   className = '',
+  onReady,
+  onError,
   style
 }) => {
   const containerRef = useRef(null);
   const settingsRef = useRef(null);
   const applyRef = useRef(null);
+  const lifecycleRef = useRef({onReady,onError});
+  lifecycleRef.current={onReady,onError};
 
   settingsRef.current = {
     frontImage,
@@ -764,6 +768,7 @@ const Lanyard = ({
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
     } catch {
+      lifecycleRef.current.onError?.();
       return undefined;
     }
     renderer.setClearColor(0x000000, 0);
@@ -876,6 +881,7 @@ const Lanyard = ({
     let time = 0;
     let visible = true;
     let alive = true;
+    let reportedReady = false;
     let placed = false;
     let hovering = false;
     let press = null;
@@ -1128,6 +1134,7 @@ const Lanyard = ({
       }
       updateBand();
       renderer.render(scene, camera);
+      if(!reportedReady&&images.front){reportedReady=true;lifecycleRef.current.onReady?.();}
     };
 
     const physics = () => {
@@ -1291,6 +1298,8 @@ const Lanyard = ({
       if (pickCard()) { event.preventDefault(); event.stopPropagation(); }
     };
 
+    const onContextLost=event=>{event.preventDefault();lifecycleRef.current.onError?.();};
+    canvas.addEventListener('webglcontextlost',onContextLost);
     canvas.addEventListener('pointerdown', onPointerDown);
     canvas.addEventListener('pointermove', onPointerMove);
     canvas.addEventListener('pointerup', onPointerUp);
@@ -1329,6 +1338,7 @@ const Lanyard = ({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
+      canvas.removeEventListener('webglcontextlost',onContextLost);
       canvas.removeEventListener('pointerdown', onPointerDown);
       canvas.removeEventListener('pointermove', onPointerMove);
       canvas.removeEventListener('pointerup', onPointerUp);
