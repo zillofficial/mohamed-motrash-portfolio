@@ -40,7 +40,7 @@ html,body,#root{width:100%;height:100%;overflow:clip}.app{width:100%;overflow:cl
 .scene-dots{gap:4px;bottom:-16px}.scene-dots button,.scene-dots .selected{width:44px;height:44px;min-width:44px;background:transparent;position:relative;border-radius:12px}
 .scene-dots button::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:5px;height:5px;border-radius:10px;background:#ffffff50}
 .scene-dots .selected::after{width:22px;background:#9867ed}
-.navlinks button,.mobile-menu button,.menu-btn{min-height:44px}.menu-btn{min-width:44px}.scene:focus{outline:none}.scene:focus-visible{outline:2px solid #c4a5ff;outline-offset:8px}
+.navlinks button,.mobile-menu button,.menu-btn{min-height:44px}.menu-btn{min-width:44px}.scene:focus,.scene:focus-visible{outline:none}
 @media(prefers-reduced-motion:reduce){.glow,.avatar{transform:none!important}}
 .app,.home,header,footer{font-family:'IBM Hero','IBM Plex Sans Arabic',sans-serif}.home h1,.home h2,.brand{font-family:'Cairo Hero',Cairo,sans-serif}
 
