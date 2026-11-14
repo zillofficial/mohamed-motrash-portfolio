@@ -29,3 +29,8 @@
 .client-grid.client-logos{grid-template-columns:repeat(2,minmax(0,1fr));max-width:680px;margin:35px auto 0;gap:24px;padding-inline:12px}
 .client-logo{height:190px;padding:28px;border-radius:20px}.client-logo img{width:100%;height:100%;object-fit:contain}.client-logo:nth-child(n){transform:none}
 @media(max-width:700px){.client-grid.client-logos{gap:14px;margin-top:26px}.client-logo{height:140px;padding:20px;border-radius:16px}}
+
+/* Transparent at rest; the orange surface fades in only during pointer hover. */
+.client-logo{background:transparent;border:1px solid transparent;position:relative;isolation:isolate;overflow:hidden}
+.client-logo::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(135deg,#ff8a3d55,#b63f1266 58%,#ffb16b44);opacity:0;transition:opacity .28s ease}
+@media(hover:hover){.client-logo:hover::before{opacity:1}.client-logo:hover{border-color:#ff8a3d50}}
