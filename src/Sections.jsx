@@ -1,3 +1,4 @@
+import './sections.css';
 import React,{lazy,Suspense,useState,useEffect,useRef} from 'react';
 import {motion,animate} from 'framer-motion';
 import {X,Users,BriefcaseBusiness,Award,Sparkles,Building2,HeartPulse,GraduationCap,Landmark,Scale,ShieldCheck,Leaf,Truck,LayoutTemplate} from 'lucide-react';
