@@ -1,7 +1,7 @@
 const asset=name=>`${import.meta.env.BASE_URL}portfolio/${name}`;
-const customCovers=new Set(['international-day','freedom-echo','world-cup','cvc','london-event']);
+const customCovers={'international-day':'international-day-cover-v2.webp','freedom-echo':'freedom-echo-cover-v2.webp','world-cup':'world-cup-cover.webp',cvc:'cvc-cover.webp','london-event':'london-event-cover-v2.webp'};
 const image=(id,title,description,aspect=1)=>({id,title,description,aspect,type:'image',color:'#1b1b1b',thumb:asset(`${id}-thumb.webp`),full:asset(`${id}-full.webp`)});
-const video=(id,title,description,duration,aspect)=>({id,title,description,duration,aspect,type:'video',color:'#1b1b1b',thumb:asset(`${id}-${customCovers.has(id)?'cover':'thumb'}.webp`),video:asset(`${id}.mp4`),duration});
+const video=(id,title,description,duration,aspect)=>({id,title,description,duration,aspect,type:'video',color:'#1b1b1b',thumb:asset(customCovers[id]||`${id}-thumb.webp`),video:asset(`${id}.mp4`),duration});
 export const portfolio=[
  image('qatar-vip','SAWA — استقبال VIP لقطر','تصميم سوشيال ميديا لخدمات السفر والاستقبال، بدمج الصور والتكوين الإعلاني.',4/5),
  image('arab-personality-awards','حفل الشخصية العربية — لندن','تصميم إعلاني رأسي لحفل الشخصية العربية في لندن.',9/16),
