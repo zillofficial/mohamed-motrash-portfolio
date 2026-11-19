@@ -65,8 +65,8 @@
 @media(max-width:700px) and (min-height:661px){.works .carousel{height:clamp(320px,53dvh,490px)}}
 
 /* Wider reel frames keep native portrait media contained and captions readable. */
-.native-card[data-media-layout=portrait]{--frame-ratio:.8;--caption-height:110px}
-.native-card[data-media-layout=portrait] .portfolio-art{background:radial-gradient(ellipse at center,#242424,#161616 80%)}
-.native-card[data-media-layout=portrait] .portfolio-caption strong{font-size:14px}
-.native-card[data-media-layout=portrait] .portfolio-play{font-size:12px;min-height:36px}
-@media(max-width:700px){.native-card[data-media-layout=portrait]{--caption-height:108px}.native-card[data-media-layout=portrait] .portfolio-caption strong{font-size:13px}.native-card[data-media-layout=portrait] .portfolio-play{font-size:11px}}
+.native-card[data-media-type=video][data-media-layout=portrait]{--frame-ratio:.8;--caption-height:110px}
+.native-card[data-media-type=video][data-media-layout=portrait] .portfolio-art{background:radial-gradient(ellipse at center,#242424,#161616 80%)}
+.native-card[data-media-type=video][data-media-layout=portrait] .portfolio-caption strong{font-size:14px}
+.native-card[data-media-type=video][data-media-layout=portrait] .portfolio-play{font-size:12px;min-height:36px}
+@media(max-width:700px){.native-card[data-media-type=video][data-media-layout=portrait]{--caption-height:108px}.native-card[data-media-type=video][data-media-layout=portrait] .portfolio-caption strong{font-size:13px}.native-card[data-media-type=video][data-media-layout=portrait] .portfolio-play{font-size:11px}}
