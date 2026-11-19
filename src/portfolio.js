@@ -3,6 +3,7 @@ const customCovers={'international-day':'international-day-cover-v2.webp','freed
 const image=(id,title,description,aspect=1)=>({id,title,description,aspect,type:'image',color:'#1b1b1b',thumb:asset(`${id}-thumb.webp`),full:asset(`${id}-full.webp`)});
 const video=(id,title,description,duration,aspect)=>({id,title,description,duration,aspect,type:'video',color:'#1b1b1b',thumb:asset(customCovers[id]||`${id}-thumb.webp`),video:asset(`${id}.mp4`),duration});
 export const portfolio=[
+ video('story-scene','مشهد قصصي — مونتاج سينمائي','مقطع قصصي قصير يجمع التمثيل وتسلسل اللقطات والإيقاع السينمائي.',24,4/5),
  image('qatar-vip','SAWA — استقبال كبار الزوار في قطر','تصميم لمنصات التواصل الاجتماعي يروّج لخدمات السفر والاستقبال، بدمج الصور والتكوين الإعلاني.',4/5),
  image('arab-personality-awards','حفل الشخصية العربية — لندن','تصميم إعلاني رأسي لحفل الشخصية العربية في لندن.',9/16),
  image('liberation-anniversary','عام على التحرير','تصميم فعالية بدمج الصور والخط العربي والتكوين البصري.',4/5),
