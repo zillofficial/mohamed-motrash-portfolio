@@ -200,6 +200,8 @@ const traceRoundedRect = (path, x, y, width, height, radius) => {
 
 const loadImage = (cache, url) => {
   if (!url) return Promise.resolve(null);
+  // Prepared canvas faces can be uploaded directly, without PNG encoding/decoding.
+  if (typeof url !== 'string') return Promise.resolve(url);
   const cached = cache.get(url);
   if (cached) return cached;
   const promise = new Promise(resolve => {

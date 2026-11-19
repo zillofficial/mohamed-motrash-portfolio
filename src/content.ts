@@ -4,7 +4,7 @@ export const content = {
  name:'محمد مطراش', role:'مصمم جرافيك', nav:['الرئيسية','أعمالي','من أنا','عملائي','إنجازاتي'],
  headline:['خلّ إبداعك','يتـــــــكلم.'], intro:'أفكارك تستحق أن تُرى.', cta:'أعمالي', eyebrow:'تصميم يصنع الفرق',
  about:['مصمم جرافيك بخبرة أكثر من 10 سنوات في مجال التصميم. اشتغلت على مشاريع متنوعة، واكتسبت خبرة تساعدني أحوّل أي فكرة لتصميم مميز يعكس هوية المشروع ويشد انتباه الجمهور.','اهتم بالتفاصيل وأحب أطلع بشغل إبداعي ومرتب، والأهم عندي إن التصميم مو بس يكون شكله حلو، بل يوصل رسالتك ويعطي مشروعك قيمة ويميزه عن غيره.'],
- lanyardPhoto:`${import.meta.env.BASE_URL}lanyard-portrait.png`, portrait:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop',
+ lanyardPhoto:`${import.meta.env.BASE_URL}lanyard-portrait.webp`, portrait:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop',
  categories:['مختارات من التصميم والمونتاج'],
 
  clients:[{name:'AdamTop',logo:adamLogo},{name:'SAWA',logo:sawaLogo}],

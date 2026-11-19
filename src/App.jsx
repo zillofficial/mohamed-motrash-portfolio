@@ -21,6 +21,11 @@ function App(){const[scene,setScene]=useState(0),[menu,setMenu]=useState(false),
  shouldFocus.current=true;
  // Prepare the destination's code and CSS while the current scene is still
  // visible, so its entrance animation doesn't finish over a loading fallback.
+ if(next===2){
+  // Begin the renderer and portrait together, before the scene transition.
+  import('./Lanyard').catch(()=>{});
+  const portrait=new Image();portrait.src=c.lanyardPhoto;
+ }
  if(next!==0)await import('./Sections');
  if(token===navigation.current)setScene(next);
 };

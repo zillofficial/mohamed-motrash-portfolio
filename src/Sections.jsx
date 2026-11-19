@@ -5,6 +5,7 @@ import {X,Users,BriefcaseBusiness,Award,Play} from 'lucide-react';
 import SmoothGallery from './SmoothGallery';
 import {portfolio} from './portfolio';
 import {content as c} from './content';
+import LanyardPreview from './LanyardPreview';
 const DesignerLanyard=lazy(()=>import('./DesignerLanyard'));
 function Heading({title,sub}){return <div className="heading"><h2>{title}</h2><p>{sub}</p></div>}
 export function Works({setLight,reduce,blocked}){
@@ -16,7 +17,7 @@ export function Works({setLight,reduce,blocked}){
  <div className="carousel-controls"><span>{c.ui.worksHint}</span><div className="progress">{items.map((item,i)=><button key={item.id} aria-label={`عرض العمل: ${item.title}`} aria-current={index===i?'true':undefined} className={index===i?'on':''} onClick={()=>gallery.current?.focus(i)}/>)}</div></div></div>;
 }
 
-export function About(){return <div className="about"><div className="about-copy"><span className="purple-label">{c.ui.aboutLabel}</span><h2>{c.name}</h2><motion.i initial={{scaleX:0}} animate={{scaleX:1}} transition={{delay:.2,duration:.5}}/>{c.about.map((p,i)=><motion.p key={p} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.3+i*.12}}>{p}</motion.p>)}</div><Suspense fallback={<div className="lanyard-panel"/>}><DesignerLanyard/></Suspense></div>}
+export function About(){return <div className="about"><div className="about-copy"><span className="purple-label">{c.ui.aboutLabel}</span><h2>{c.name}</h2><motion.i initial={{scaleX:0}} animate={{scaleX:1}} transition={{delay:.2,duration:.5}}/>{c.about.map((p,i)=><motion.p key={p} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.3+i*.12}}>{p}</motion.p>)}</div><Suspense fallback={<div className="lanyard-panel"><LanyardPreview/></div>}><DesignerLanyard/></Suspense></div>}
 export function Clients(){return <div className="clients"><Heading title={c.nav[3]} sub={c.ui.clientSub}/><div className="client-grid client-logos">{c.clients.map((client,i)=><motion.div className="client client-logo" key={client.name} initial={{opacity:0,scale:.95,y:20}} animate={{opacity:1,scale:1,y:0}} transition={{delay:i*.08}} whileHover={{y:-5}}><img src={client.logo} alt={client.name} loading="lazy" decoding="async"/></motion.div>)}</div></div>}
 
 function Counter({value,reduce}){const ref=useRef();useEffect(()=>{if(reduce){ref.current.textContent='+'+value;return}const control=animate(0,value,{duration:2,ease:'easeOut',onUpdate:v=>{if(ref.current)ref.current.textContent='+'+Math.round(v)}});return()=>control.stop()},[value,reduce]);return <strong ref={ref} dir="ltr">+0</strong>}
