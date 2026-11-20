@@ -1,10 +1,8 @@
 import {avatarSrc,avatarSrcSet,avatarSizes,brandAvatar} from './hero-image';
 import {lazy,Suspense} from 'react';
-const Works=lazy(()=>import('./Sections').then(m=>({default:m.Works})));
-const About=lazy(()=>import('./Sections').then(m=>({default:m.About})));
-const Clients=lazy(()=>import('./Sections').then(m=>({default:m.Clients})));
-const Stats=lazy(()=>import('./Sections').then(m=>({default:m.Stats})));
-const Lightbox=lazy(()=>import('./Sections').then(m=>({default:m.Lightbox})));
+let sectionsPromise;
+const loadSections=()=>sectionsPromise||(sectionsPromise=import('./Sections').catch(error=>{sectionsPromise=null;throw error;}));
+const Lightbox=lazy(()=>loadSections().then(m=>({default:m.Lightbox})));
 import React,{useState,useEffect,useLayoutEffect,useRef} from 'react';import{m,LazyMotion,AnimatePresence,MotionConfig,useReducedMotion,usePresence}from'framer-motion';import{ArrowLeft,Menu,X,ArrowUpLeft}from'lucide-react';import{content as c}from'./content';
 // Keep layout/gesture features off the initial network path. Every input mode
 // activates the same full feature set before subsequent scene animations.
@@ -14,7 +12,7 @@ const loadMotionFeatures=()=>new Promise(resolve=>{
  events.forEach(e=>window.addEventListener(e,activate,{once:true,capture:true,passive:true}));
 });
 const ease=[.22,1,.36,1];
-function App(){const[scene,setScene]=useState(0),[menu,setMenu]=useState(false),[light,setLight]=useState(null);const reduce=useReducedMotion();const sceneRef=useRef(null);const menuButton=useRef(null);const hadMenu=useRef(false);const shouldFocus=useRef(false);const navigation=useRef(0);const go=async i=>{
+function App(){const[sections,setSections]=useState(null);const {Works,About,Clients,Stats}=sections||{};const[scene,setScene]=useState(0),[menu,setMenu]=useState(false),[light,setLight]=useState(null);const reduce=useReducedMotion();const sceneRef=useRef(null);const menuButton=useRef(null);const hadMenu=useRef(false);const shouldFocus=useRef(false);const navigation=useRef(0);const go=async i=>{
  const next=(i+5)%5,token=++navigation.current;
  setMenu(false);
  if(next===scene){shouldFocus.current=false;return;}
@@ -26,10 +24,24 @@ function App(){const[scene,setScene]=useState(0),[menu,setMenu]=useState(false),
   import('./Lanyard').catch(()=>{});
   const portrait=new Image();portrait.src=c.lanyardPhoto;
  }
- if(next!==0)await import('./Sections');
+ if(next!==0){
+  try{const loaded=await loadSections();if(token!==navigation.current)return;setSections(loaded);}
+  catch{if(token===navigation.current)shouldFocus.current=false;return;}
+ }
  if(token===navigation.current)setScene(next);
 };
 
+// Prepare secondary sections during idle time or the first interaction.
+// Navigation keeps the current scene visible until this same promise resolves.
+useEffect(()=>{
+ let timer,idle,disposed=false;
+ const events=['pointerdown','touchstart','wheel','keydown'];
+ const warm=()=>{events.forEach(event=>window.removeEventListener(event,warm));loadSections().then(loaded=>{if(!disposed)setSections(loaded);}).catch(()=>{});};
+ const schedule=()=>{timer=window.setTimeout(()=>{if('requestIdleCallback' in window)idle=window.requestIdleCallback(warm,{timeout:3000});else warm();},1500);};
+ events.forEach(event=>window.addEventListener(event,warm,{once:true,passive:true}));
+ if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule,{once:true});
+ return()=>{disposed=true;clearTimeout(timer);if(idle!==undefined)window.cancelIdleCallback?.(idle);window.removeEventListener('load',schedule);events.forEach(event=>window.removeEventListener(event,warm));};
+},[]);
 useEffect(()=>{if(menu){hadMenu.current=true;document.querySelector('#compact-menu button')?.focus()}else if(hadMenu.current){hadMenu.current=false;if(!shouldFocus.current)menuButton.current?.focus()}},[menu]);
 useEffect(()=>{const f=e=>{if(e.key==='Escape'){setMenu(false);setLight(null)}if(e.target.closest('button,[role=dialog]'))return;if(scene!==1&&!light){if(e.key==='ArrowLeft')go(scene+1);if(e.key==='ArrowRight')go(scene-1)}};window.addEventListener('keydown',f);return()=>window.removeEventListener('keydown',f)},[scene,light]);
 // Treat vertical scrolling as discrete scene navigation, with a gesture cooldown.
@@ -77,7 +89,7 @@ useEffect(()=>{
 },[scene,menu,light,reduce]);
 return <LazyMotion features={loadMotionFeatures}><MotionConfig reducedMotion="user"><div className="app"><m.div className="glow" animate={{x:scene*35,y:scene*-14}} transition={{duration:1.4}}/><div className="ripples"/><header inert={light?true:undefined} aria-hidden={light?true:undefined}><m.div className="navbar" initial={false} animate={{y:0,opacity:1}} transition={{duration:.8,ease}}><button className="brand glass" onClick={()=>go(0)}><img src={brandAvatar} width="64" height="64" alt=""/>{c.name}<span className="brand-dot"/></button><nav className="glass navlinks" aria-label="التنقل الرئيسي">{c.nav.map((n,i)=><button key={n} onClick={()=>go(i)} aria-current={scene===i?'page':undefined}>{scene===i&&<m.span className="active-pill" layoutId="nav" transition={{type:'spring',stiffness:300,damping:30}}/>}<span>{n}</span></button>)}</nav><button ref={menuButton} className="glass menu-btn" aria-label={c.ui.menu} aria-expanded={menu} aria-controls="compact-menu" onClick={()=>setMenu(!menu)}>{menu?<X size={20}/>:<Menu size={20}/>}</button></m.div></header>
 <AnimatePresence mode="wait" initial={false}><SceneFrame sceneRef={sceneRef} focusPending={shouldFocus} covered={Boolean(light)} scene={scene} reduce={reduce} key={scene}>
-{scene===0&&<Home go={go} reduce={reduce}/>}<Suspense fallback={<div role="status">جارٍ التحميل</div>}>{scene===1&&<Works setLight={setLight} reduce={reduce} blocked={Boolean(light)||menu}/>} {scene===2&&<About/>}{scene===3&&<Clients/>}{scene===4&&<Stats reduce={reduce}/>}</Suspense></SceneFrame></AnimatePresence>
+{scene===0&&<Home go={go} reduce={reduce}/>} {scene===1&&Works&&<Works setLight={setLight} reduce={reduce} blocked={Boolean(light)||menu}/>} {scene===2&&About&&<About/>}{scene===3&&Clients&&<Clients/>}{scene===4&&Stats&&<Stats reduce={reduce}/>}</SceneFrame></AnimatePresence>
 <footer inert={light?true:undefined} aria-hidden={light?true:undefined}><div className="scene-dots">{c.nav.map((n,i)=><button onClick={()=>go(i)} key={n} aria-label={n} aria-current={scene===i?'page':undefined} className={scene===i?'selected':''}/>)}</div></footer>
 <AnimatePresence>{menu&&<React.Fragment><m.button className="menu-dismiss" aria-label={c.ui.close} onClick={()=>setMenu(false)} initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}/><m.nav id="compact-menu" aria-label="قائمة التنقل" className="mobile-menu glass" initial={{opacity:0,y:-8,scale:.96}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:-5,scale:.97}} transition={{duration:reduce?.1:.22,ease}}>{c.nav.map((n,i)=><button aria-current={scene===i?'page':undefined} className={scene===i?'chosen':''} onClick={()=>go(i)} key={n}><span>{n}</span><ArrowUpLeft/></button>)}</m.nav></React.Fragment>}</AnimatePresence>
 <AnimatePresence>{light&&<Suspense fallback={null}><Lightbox light={light} close={()=>setLight(null)}/></Suspense>}</AnimatePresence></div></MotionConfig></LazyMotion>}
@@ -94,7 +106,7 @@ function SceneFrame({sceneRef,focusPending,covered,scene,reduce,children}){
   const frames=present
    ?[{opacity:0,transform:'translateY(16px) scale(1.02)'},{opacity:1,transform:'translateY(0) scale(1)'}]
    :[{opacity:1,transform:'translateY(0) scale(1)'},{opacity:0,transform:'translateY(-16px) scale(.985)'}];
-  const animation=element.animate(frames,{duration:420,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+  const animation=element.animate(frames,{duration:present?300:180,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
   animation.finished.then(finish,()=>{});
   return()=>{active=false;animation.cancel();};
  },[present,scene,reduce]);
