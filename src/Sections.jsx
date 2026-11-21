@@ -1,7 +1,7 @@
 import './sections.css';
 import React,{lazy,Suspense,useState,useEffect,useRef,useMemo} from 'react';
 import {motion,animate} from 'framer-motion';
-import {X,Users,BriefcaseBusiness,Award,Play} from 'lucide-react';
+import {X,BriefcaseBusiness,Award,Play} from 'lucide-react';
 import SmoothGallery from './SmoothGallery';
 import {portfolio} from './portfolio';
 import {content as c} from './content';
@@ -66,7 +66,7 @@ export function Clients() {
 }
 
 function Counter({value,reduce}){const ref=useRef();useEffect(()=>{if(reduce){ref.current.textContent='+'+value;return}const control=animate(0,value,{duration:2,ease:'easeOut',onUpdate:v=>{if(ref.current)ref.current.textContent='+'+Math.round(v)}});return()=>control.stop()},[value,reduce]);return <strong ref={ref} dir="ltr">+0</strong>}
-export function Stats({reduce}){return <div className="stats"><Heading title={c.nav[4]} sub={c.ui.statSub}/><div className="stat-grid">{c.stats.map((s,i)=>{const Icon=[Users,BriefcaseBusiness,Award][i];return <motion.div key={s.label} className="stat glass" style={{height:245+i*48}} initial={{opacity:0,y:80}} animate={{opacity:1,y:0}} transition={{delay:i*.14,duration:.7}}><motion.div className="stat-inner" animate={reduce?{}:{y:[0,-5,0]}} transition={{duration:5,repeat:Infinity,delay:i*.6}}><span className="stat-icon"><Icon size={28}/></span><Counter value={s.value} reduce={reduce}/><p>{s.label}</p><span className="stat-line"/></motion.div></motion.div>})}</div></div>}
+export function Stats({reduce}){return <div className="stats"><Heading title={c.nav[4]} sub={c.ui.statSub}/><div className="stat-grid">{c.stats.map((s,i)=>{const Icon=[BriefcaseBusiness,Award][i];return <motion.div key={s.label} className="stat glass" style={{height:293+i*48}} initial={{opacity:0,y:80}} animate={{opacity:1,y:0}} transition={{delay:i*.14,duration:.7}}><motion.div className="stat-inner" animate={reduce?{}:{y:[0,-5,0]}} transition={{duration:5,repeat:Infinity,delay:i*.6}}><span className="stat-icon"><Icon size={28}/></span><Counter value={s.value} reduce={reduce}/><p>{s.label}</p><span className="stat-line"/></motion.div></motion.div>})}</div></div>}
 export function Lightbox({light,close}){
  const ref=useRef(null),dialog=useRef(null);
  useEffect(()=>{const before=light.trigger;ref.current?.focus();return()=>{requestAnimationFrame(()=>{if(before?.isConnected)before.focus({preventScroll:true})})}},[light]);

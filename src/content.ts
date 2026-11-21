@@ -29,6 +29,6 @@ export const content = {
    {name:'AdamTop',logo:adamLogo,shape:'navy-logo'},
   ],
  ],
- stats:[{value:500,label:'عميل'},{value:400,label:'مشروع'},{value:5,label:'سنوات خبرة'}],
+ stats:[{value:400,label:'مشروع'},{value:5,label:'سنوات خبرة'}],
  ui:{menu:'فتح القائمة',close:'إغلاق',prev:'السابق',next:'التالي',sample:'نماذج توضيحية قابلة للاستبدال',footer:'كل فكرة، بداية لحكاية بصرية.',made:'صُمّم بشغف',aboutLabel:'أنا',clientSub:'شراكات أعتز بها، وأثر يتجدد.',statSub:'رحلة من الشغف، تُترجم إلى أرقام.',worksHint:'اسحب لاستكشاف الأعمال',pause:'إيقاف الحركة التلقائية',play:'تشغيل الحركة التلقائية'}
 };
