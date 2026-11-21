@@ -12,14 +12,20 @@ export const content = {
  lanyardPhoto:`${import.meta.env.BASE_URL}lanyard-portrait.webp`, portrait:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop',
  categories:['مختارات من التصميم والمونتاج'],
 
- clients:[
-  {name:'AdamTop',logo:adamLogo},
-  {name:'SAWA',logo:sawaLogo},
-  {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo},
-  {name:'جامعة البيروني',logo:biruniLogo},
-  {name:'شعار ذهبي بخط عربي',logo:goldLogo},
-  {name:'اتحاد الطلبة العرب في جامعة البيروني',logo:arabUnionLogo,shape:'arab-union'},
-  {name:'الاتحاد العام لطلبة سوريا',logo:generalUnionLogo,shape:'general-union'},
+ clientRows:[
+  [
+   {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo},
+   {name:'اتحاد الطلبة العرب في جامعة البيروني',logo:arabUnionLogo,shape:'arab-union'},
+   {name:'الاتحاد العام لطلبة سوريا',logo:generalUnionLogo,shape:'general-union'},
+  ],
+  [
+   {name:'جامعة البيروني',logo:biruniLogo},
+   {name:'SAWA',logo:sawaLogo},
+  ],
+  [
+   {name:'أحمد منصور',logo:goldLogo},
+   {name:'AdamTop',logo:adamLogo},
+  ],
  ],
  stats:[{value:500,label:'عميل'},{value:400,label:'مشروع'},{value:5,label:'سنوات خبرة'}],
  ui:{menu:'فتح القائمة',close:'إغلاق',prev:'السابق',next:'التالي',sample:'نماذج توضيحية قابلة للاستبدال',footer:'كل فكرة، بداية لحكاية بصرية.',made:'صُمّم بشغف',aboutLabel:'أنا',clientSub:'شراكات أعتز بها، وأثر يتجدد.',statSub:'رحلة من الشغف، تُترجم إلى أرقام.',worksHint:'اسحب لاستكشاف الأعمال',pause:'إيقاف الحركة التلقائية',play:'تشغيل الحركة التلقائية'}
