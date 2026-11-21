@@ -22,6 +22,27 @@ export function Clients() {
   return (
     <div className="clients">
       <Heading title={c.nav[3]} sub={c.ui.clientSub} />
+      <svg className="logo-filters" width="0" height="0" aria-hidden="true">
+        <defs>
+          <filter id="client-paper-key" colorInterpolationFilters="sRGB">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 1 0" result="red" />
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 1 0 0 0  0 1 0 0 0  0 1 0 0 0  0 0 0 1 0" result="green" />
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 1 0 0  0 0 1 0 0  0 0 1 0 0  0 0 0 1 0" result="blue" />
+            <feBlend in="red" in2="green" mode="darken" result="red-green-min" />
+            <feBlend in="red-green-min" in2="blue" mode="darken" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.15 0 0 0 1.14" result="logo-alpha" />
+            <feFlood floodColor="white" result="background" />
+            <feComposite in="background" in2="logo-alpha" operator="out" result="matte" />
+            <feComposite in="SourceGraphic" in2="matte" operator="arithmetic" k2="1" k3="-1" />
+          </filter>
+          <filter id="client-navy-key" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  5 0 0 0 -.61" result="logo-alpha" />
+            <feFlood floodColor="#19192f" result="background" />
+            <feComposite in="background" in2="logo-alpha" operator="out" result="matte" />
+            <feComposite in="SourceGraphic" in2="matte" operator="arithmetic" k2="1" k3="-1" />
+          </filter>
+        </defs>
+      </svg>
       <div className="client-grid client-logos">
         {c.clientRows.map((row, rowIndex) => (
           <div className="client-logo-row" key={row[0].name}>

@@ -1,9 +1,10 @@
-import adamLogo from './assets/adamtop-light-logo.webp';
+import adamLogo from './assets/adamtop-client.webp';
 import biruniUnionLogo from './assets/biruni-student-union.webp';
 import biruniLogo from './assets/biruni-university.webp';
 import arabUnionLogo from './assets/biruni-arab-student-union.webp';
 import generalUnionLogo from './assets/general-union-syrian-students.webp';
 import goldLogo from './assets/gold-client-logo.webp';
+import studyFansLogo from './assets/studyfans.webp';
 import sawaLogo from './assets/sawa-logo.webp';
 export const content = {
  name:'محمد مطراش', role:'مصمم جرافيكي', nav:['الرئيسية','أعمالي','من أنا','عملائي','إنجازاتي'],
@@ -14,17 +15,18 @@ export const content = {
 
  clientRows:[
   [
-   {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo},
+   {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo,shape:'paper-logo'},
    {name:'اتحاد الطلبة العرب في جامعة البيروني',logo:arabUnionLogo,shape:'arab-union'},
    {name:'الاتحاد العام لطلبة سوريا',logo:generalUnionLogo,shape:'general-union'},
   ],
   [
-   {name:'جامعة البيروني',logo:biruniLogo},
+   {name:'جامعة البيروني',logo:biruniLogo,shape:'paper-logo'},
    {name:'SAWA',logo:sawaLogo},
+   {name:'StudyFans',logo:studyFansLogo,shape:'paper-logo'},
   ],
   [
    {name:'أحمد منصور',logo:goldLogo},
-   {name:'AdamTop',logo:adamLogo},
+   {name:'AdamTop',logo:adamLogo,shape:'navy-logo'},
   ],
  ],
  stats:[{value:500,label:'عميل'},{value:400,label:'مشروع'},{value:5,label:'سنوات خبرة'}],
