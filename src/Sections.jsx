@@ -55,7 +55,9 @@ export function Clients() {
                 transition={{delay:(rowIndex+index)*.08}}
                 whileHover={{y:-5}}
               >
-                <img className={client.shape} src={client.logo} alt={client.name} loading="lazy" decoding="async" />
+                <span className={`client-logo-art${client.surface?' logo-surface logo-surface-'+client.surface:''}`}>
+                  <img className={client.shape} src={client.logo} alt={client.name} loading="lazy" decoding="async" />
+                </span>
               </motion.div>
             ))}
           </div>

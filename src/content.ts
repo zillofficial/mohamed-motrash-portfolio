@@ -15,14 +15,14 @@ export const content = {
 
  clientRows:[
   [
-   {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo,shape:'paper-logo'},
+   {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo,shape:'paper-logo',surface:'disc'},
    {name:'اتحاد الطلبة العرب في جامعة البيروني',logo:arabUnionLogo,shape:'arab-union'},
    {name:'الاتحاد العام لطلبة سوريا',logo:generalUnionLogo,shape:'general-union'},
   ],
   [
-   {name:'جامعة البيروني',logo:biruniLogo,shape:'paper-logo'},
+   {name:'جامعة البيروني',logo:biruniLogo,shape:'paper-logo',surface:'plate'},
    {name:'SAWA',logo:sawaLogo},
-   {name:'StudyFans',logo:studyFansLogo,shape:'paper-logo'},
+   {name:'StudyFans',logo:studyFansLogo,shape:'paper-logo',surface:'plate'},
   ],
   [
    {name:'أحمد منصور',logo:goldLogo},
