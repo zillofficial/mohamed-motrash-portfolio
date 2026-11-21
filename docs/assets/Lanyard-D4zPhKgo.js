@@ -1,4 +1,4 @@
-import{r as si,l as pl}from"./index-BHM0A5E3.js";/**
+import{r as si,l as pl}from"./index-Cd54GTeE.js";/**
  * @license
  * Copyright 2010-2025 Three.js Authors
  * SPDX-License-Identifier: MIT
