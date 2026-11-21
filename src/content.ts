@@ -1,4 +1,7 @@
-import adamLogo from './assets/adamtop-light-logo.webp';
+import adamLogo from './assets/adamtop-client.webp';
+import biruniUnionLogo from './assets/biruni-student-union.webp';
+import biruniLogo from './assets/biruni-university.webp';
+import goldLogo from './assets/gold-client-logo.webp';
 import sawaLogo from './assets/sawa-logo.webp';
 export const content = {
  name:'محمد مطراش', role:'مصمم جرافيكي', nav:['الرئيسية','أعمالي','من أنا','عملائي','إنجازاتي'],
@@ -7,7 +10,13 @@ export const content = {
  lanyardPhoto:`${import.meta.env.BASE_URL}lanyard-portrait.webp`, portrait:'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&auto=format&fit=crop',
  categories:['مختارات من التصميم والمونتاج'],
 
- clients:[{name:'AdamTop',logo:adamLogo},{name:'SAWA',logo:sawaLogo}],
+ clients:[
+  {name:'AdamTop',logo:adamLogo},
+  {name:'SAWA',logo:sawaLogo},
+  {name:'اتحاد الطلاب السوريين في جامعة البيروني',logo:biruniUnionLogo},
+  {name:'جامعة البيروني',logo:biruniLogo},
+  {name:'شعار ذهبي بخط عربي',logo:goldLogo},
+ ],
  stats:[{value:500,label:'عميل'},{value:400,label:'مشروع'},{value:5,label:'سنوات خبرة'}],
  ui:{menu:'فتح القائمة',close:'إغلاق',prev:'السابق',next:'التالي',sample:'نماذج توضيحية قابلة للاستبدال',footer:'كل فكرة، بداية لحكاية بصرية.',made:'صُمّم بشغف',aboutLabel:'أنا',clientSub:'شراكات أعتز بها، وأثر يتجدد.',statSub:'رحلة من الشغف، تُترجم إلى أرقام.',worksHint:'اسحب لاستكشاف الأعمال',pause:'إيقاف الحركة التلقائية',play:'تشغيل الحركة التلقائية'}
 };
